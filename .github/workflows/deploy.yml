@@ -13,9 +13,9 @@ jobs:
       - name: Deploy VPS
         uses: appleboy/ssh-action@1.0.3
         with: 
-          host: ${{ secret.VPS_HOST }}
-          username: ${{ secret.VPS_USER }}
-          key: ${{ secret.VPS_SSH_KEY }}
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
 
           script:
             cd /var/www/go-notes-api
