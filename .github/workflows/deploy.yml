@@ -8,10 +8,31 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Deploy VPS
-        uses: appleboy/ssh-action@v1.2.5
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.3'
+          cache: true
+      
+      - name: Compile Go Binary (Lokal Github)
+        run: |
+          GOOS=linux CGO_ENABLED=0 go build -o main ./cmd/server
+
+      - name: Copy Binary and Dockerfile to VPS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secret.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: "main,Dockerfile,docker-compose.yml"
+          target: "/var/www/go-notes-api"
+      
+      - name: Run App on VPS via SSH
+        uses: appleboy/ssh-action@master
         with: 
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
@@ -19,5 +40,4 @@ jobs:
 
           script: |
             cd /var/www/go-notes-api
-            git pull
-            DOCKER_BUILDKIT=1 docker compose up -d --build app
+            docker compose up -d --build app
