@@ -4,11 +4,14 @@ WORKDIR /app
 
 COPY go.mod go.sum ./
 
-RUN go mod download
+RUN --mount=type=cache,target=/go/pkg/mod \
+    go mod download
 
 COPY . .
 
-RUN GOOS=linux CGO_ENABLED=0 go build -o main ./cmd/server
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    --mount=type=cache,target=/go/pkg/mod \
+    GOOS=linux CGO_ENABLED=0 go build -o main ./cmd/server
 
 
 

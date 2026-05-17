@@ -54,7 +54,7 @@ func main() {
 
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "Notes API")
+		fmt.Fprint(w, "Notes API 🚀")
 	})
 	
 

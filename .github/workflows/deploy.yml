@@ -20,4 +20,4 @@ jobs:
           script: |
             cd /var/www/go-notes-api
             git pull
-            docker compose up -d --build
+            DOCKER_BUILDKIT=1 docker compose up -d --build app
