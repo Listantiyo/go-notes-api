@@ -5,13 +5,13 @@ Proyek ini adalah REST API sederhana berbasis Go (Golang) yang mengelola catatan
 ## 🚀 Fitur Utama & Struktur Data
 * **Framework Router:** `go-chi/chi` (dengan penanganan routing dinamis).
 * **Database:** SQLite (disimpan lokal dalam bentuk file biner di dalam folder `./database`).
-* **ID Generasi:** UUID V4 (menggunakan paket `://github.com`).
+* **ID Generasi:** UUID (menggunakan paket `https://github.com/google/uuid`).
 
 ### Skema Tabel (`notes`)
 
 | Kolom | Tipe Data | Keterangan |
 | :--- | :--- | :--- |
-| `id` | `TEXT` | Primary Key (UUID V4 String) |
+| `id` | `TEXT` | Primary Key (UUID String) |
 | `title` | `TEXT` | Judul Catatan |
 | `descriptions` | `TEXT` | Isi / Deskripsi Catatan |
 

@@ -1,0 +1,23 @@
+name: Deploy VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy VPS
+        uses: appleboy/ssh-action@1.0.3
+        with: 
+          host: ${{ secret.VPS_HOST }}
+          username: ${{ secret.VPS_USER }}
+          key: ${{ secret.VPS_SSH_KEY }}
+
+          script:
+            cd /var/www/go-notes-api
+            git pull
+            docker compose up -d --build
